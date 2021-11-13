@@ -2283,6 +2283,41 @@ static bool menu_driver_displaylist_push_internal(
       menu_displaylist_ctl(DISPLAYLIST_IMAGES_HISTORY, info, settings);
       return true;
    }
+   else if (string_is_equal(label, msg_hash_to_str(MENU_ENUM_LABEL_COLLECTION_TAB)))
+   {
+       const char *dir_playlist    = settings->paths.directory_playlist;
+
+       filebrowser_clear_type();
+       info->type                  = 42;
+
+       if (!string_is_empty(info->exts))
+           free(info->exts);
+       if (!string_is_empty(info->label))
+           free(info->label);
+
+       info->exts  = strdup("lpl");
+       info->label = strdup(
+               msg_hash_to_str(MENU_ENUM_LABEL_PLAYLISTS_TAB));
+
+       if (string_is_empty(dir_playlist))
+       {
+           menu_entries_ctl(MENU_ENTRIES_CTL_CLEAR, info->list);
+           info->need_refresh                  = true;
+           info->need_push_no_playlist_entries = true;
+           info->need_push                     = true;
+
+           return true;
+       }
+
+       if (!string_is_empty(info->path))
+           free(info->path);
+
+       info->path = strdup(dir_playlist);
+
+       if (menu_displaylist_ctl(
+               DISPLAYLIST_DATABASE_PLAYLISTS, info, settings))
+           return true;
+   }
    else if (string_is_equal(label, msg_hash_to_str(MENU_ENUM_LABEL_PLAYLISTS_TAB)))
    {
       const char *dir_playlist    = settings->paths.directory_playlist;
@@ -2339,6 +2374,10 @@ static bool menu_driver_displaylist_push_internal(
    {
       if (menu_displaylist_ctl(DISPLAYLIST_HORIZONTAL, info, settings))
          return true;
+   }
+   else if (string_is_equal(label, msg_hash_to_str(MENU_ENUM_LABEL_COLLECTION_TAB))) {
+       if (menu_displaylist_ctl(DISPLAYLIST_COLLECTION_LIST, info, settings))
+           return true;
    }
 
    return false;

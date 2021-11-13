@@ -155,6 +155,7 @@ GENERIC_DEFERRED_PUSH(deferred_push_achievement_pause_menu,         DISPLAYLIST_
 GENERIC_DEFERRED_PUSH(deferred_push_achievement_list,               DISPLAYLIST_ACHIEVEMENT_LIST)
 GENERIC_DEFERRED_PUSH(deferred_push_rdb_collection,                 DISPLAYLIST_PLAYLIST_COLLECTION)
 GENERIC_DEFERRED_PUSH(deferred_main_menu_list,                      DISPLAYLIST_MAIN_MENU)
+GENERIC_DEFERRED_PUSH(deferred_collection_list,                     DISPLAYLIST_COLLECTION_LIST)
 GENERIC_DEFERRED_PUSH(deferred_music_list,                          DISPLAYLIST_MUSIC_LIST)
 GENERIC_DEFERRED_PUSH(deferred_user_binds_list,                     DISPLAYLIST_USER_BINDS_LIST)
 GENERIC_DEFERRED_PUSH(deferred_push_accounts_list,                  DISPLAYLIST_ACCOUNTS_LIST)
@@ -1301,6 +1302,9 @@ static int menu_cbs_init_bind_deferred_push_compare_label(
          case MENU_ENUM_LABEL_SIDELOAD_CORE_LIST:
             BIND_ACTION_DEFERRED_PUSH(cbs, deferred_push_file_browser_select_sideload_core);
             break;
+          case MENU_ENUM_LABEL_COLLECTION_TAB:
+              BIND_ACTION_DEFERRED_PUSH(cbs, deferred_collection_list);
+              break;
          default:
             return -1;
       }

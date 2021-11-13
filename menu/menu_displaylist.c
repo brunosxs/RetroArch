@@ -11393,6 +11393,12 @@ bool menu_displaylist_ctl(enum menu_displaylist_ctl_state type,
 #endif
          }
          break;
+       case DISPLAYLIST_COLLECTION_LIST:
+       {
+           menu_entries_ctl(MENU_ENTRIES_CTL_CLEAR, info->list);
+           info->count           = 0;
+       }
+       break;
       case DISPLAYLIST_ACHIEVEMENT_PAUSE_MENU:
 #ifdef HAVE_CHEEVOS
          menu_entries_ctl(MENU_ENTRIES_CTL_CLEAR, info->list);
